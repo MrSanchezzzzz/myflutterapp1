@@ -51,7 +51,7 @@ class ItemDetailsScreen extends StatelessWidget {
   }
   void AddToFavourites(){
     AlertDialog dialog=AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
       content: Container(
         child:SizedBox(
           height: 150,
