@@ -13,9 +13,10 @@ class BottomAppBarButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        margin: EdgeInsets.all(2.0),
-        decoration: BoxDecoration(color: enabled?Colors.green:Colors.grey,borderRadius: BorderRadius.all(Radius.circular(20))),
+        decoration: BoxDecoration(
+            color: enabled?Color(0xff4D662D):Colors.grey,
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),
+        ),
         width: double.infinity,
           child: TextButton(
             onPressed:enabled?onTap:null,

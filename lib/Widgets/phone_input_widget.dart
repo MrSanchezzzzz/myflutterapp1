@@ -1,8 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:myflutterapp1/Widgets/alert_dialog.dart';
+import 'package:myflutterapp1/Widgets/auth_button.dart';
+import 'package:myflutterapp1/Widgets/auth_containers.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:myflutterapp1/Widgets/bottom_app_bar_button.dart';
-import 'package:phone_form_field/phone_form_field.dart';
 
 class PhoneInputWidget extends StatefulWidget{
   @override
@@ -15,54 +19,75 @@ class PhoneInputWidget extends StatefulWidget{
   Function(String) callback;
 }
 
-class PhoneInputWidgetState extends State<PhoneInputWidget>{
+class PhoneInputWidgetState extends State<PhoneInputWidget> {
+ late TextEditingController _controller;
+
+  @override
+  void initState()=> _controller=TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top:15),
-        width: MediaQuery.of(context).size.width-50,
-      height: 225,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color:Colors.white70,
-      ),
-
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Text("Введіть ваш номер телефона, щоб ми могли підтвердити вашу особу",textScaleFactor: 1.25),
-          ),
-           Padding(padding: EdgeInsets.all(10),
-            child: PhoneFormField(
-          defaultCountry: "UA",
-          selectorNavigator: DraggableModalBottomSheetNavigator(),
-              validator: PhoneValidator.compose([
-                PhoneValidator.validMobile(errorText: "Введіть коректний номер",allowEmpty: false)]),
-              onChanged: ValidatePhoneInput,
-              decoration: InputDecoration(labelText: "Ваш номер телефону"),
-        )
-      ),
-            Spacer(),
-            BottomAppBarButton("Далі",
-              buttonEnabled: widget.buttonEnabled,
-              onTapHandler: onButtonTap,
+    return AuthBottomContainer(
+        Column(
+          children: [
+            Padding(
+                padding: EdgeInsets.only(top: 30, left: 15, right: 15),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontFamily: "Viaoda Libre",
+                  ),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      prefixIcon: Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Icon(Icons.language, color: Colors.black,)
+                      )
+                  ),
+                  controller: _controller,
+                  inputFormatters: [
+                    MaskTextInputFormatter(mask: '+38 ### ### ## ##', filter: { "#": RegExp(r'[0-9]') })
+                  ],
+                  onChanged: (value){
+                    widget.phoneNumber=value;
+                    },
+                )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 115,vertical: 25),
+              child: AuthButton("Далi",fontSize: 24,onTap:() {
+                if(ValidatePhoneInput(widget.phoneNumber)){
+                  widget.callback(widget.phoneNumber);
+                }
+                else{
+                  MyAlertDialog.showAlertDialog(context);
+                }
+              },
+              ),
             )
-      ],
+          ],
         )
-      );
+    );
   }
-  onButtonTap(){
-    widget.callback(widget.phoneNumber);
-    print("phone tap");
-  }
+
+
   ///Checks if phone is correct. Enables button if true
-  void ValidatePhoneInput(PhoneNumber? value){
-    if (value != null) {
-      if(value.nsn.isNotEmpty&&value.validate(type: PhoneNumberType.mobile)){
-        widget.buttonEnabled=true;
-        widget.phoneNumber=value.isoCode+value.nsn;
-      }
+  bool ValidatePhoneInput(String? value) {
+    if (value == null || value.isEmpty) {
+      return  false;
     }
-    setState(() {});
+    else if (!(RegExp("([+ 0-9])\\w+").hasMatch(value))) {
+      return false;
+    }
+    else if (value.length!=17){
+      return false;
+    }
+    return true;
   }
+
+
 }

@@ -14,6 +14,8 @@ class AuthScreen extends StatefulWidget{
 
   String userPhoneNumber="";
   String userLogin="";
+
+  //TODO: return to zero
   int authStage=0;
 }
 
@@ -24,7 +26,7 @@ class AuthScreenState extends State<AuthScreen>{
       body: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          image: DecorationImage(image: NetworkImage("https://andychef.ru/wp-content/uploads/2015/01/main6.jpg"),fit: BoxFit.fitHeight)
+          image: DecorationImage(image: AssetImage("assets/images/auth_screen_background.png"),fit: BoxFit.fill)
         ),
         child: Container(child: selectAuthWidget(widget.authStage)
         ),
@@ -37,10 +39,10 @@ class AuthScreenState extends State<AuthScreen>{
         return PhoneInputWidget(PhoneNumberCallback);
         break;
       case 1:
-          return PinInputWidget(widget.userPhoneNumber,callback);
+          return PinInputWidget(widget.userPhoneNumber,next,previuos);
         break;
       case 2:
-        return LoginInputWidget(LoginCallback);
+        return LoginInputWidget(LoginCallback,previuos);
         break;
       case 3:
         CreateUser(widget.userLogin,widget.userPhoneNumber);
@@ -57,15 +59,20 @@ class AuthScreenState extends State<AuthScreen>{
 
   void PhoneNumberCallback(String phoneNumber){
    widget.userPhoneNumber=phoneNumber;
-   callback();
+   next();
   }
   void LoginCallback(String login){
     widget.userLogin=login;
-    callback();
+    next();
   }
-  void callback(){
+  void next(){
     setState(() {
       widget.authStage++;
+    });
+  }
+  void previuos(){
+    setState(() {
+      widget.authStage--;
     });
   }
 

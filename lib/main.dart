@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:myflutterapp1/auth_screen.dart';
-import 'Widgets/phone_input_widget.dart';
+import 'package:myflutterapp1/start_screen.dart';
+
+import 'auth_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +38,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Timer(
         const Duration(seconds: 1),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => AuthScreen())));
+            context, MaterialPageRoute(builder: (context) => StartScreen())));
   }
 
   @override

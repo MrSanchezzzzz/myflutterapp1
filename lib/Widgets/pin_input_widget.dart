@@ -2,19 +2,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:myflutterapp1/Widgets/auth_button.dart';
+import 'package:myflutterapp1/Widgets/auth_containers.dart';
 import 'package:myflutterapp1/Widgets/bottom_app_bar_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinInputWidget extends StatefulWidget{
+
   @override
   PinInputWidgetState createState()=>PinInputWidgetState();
-  PinInputWidget(String PhoneNumber,this.onTapCallBack){
+  PinInputWidget(String PhoneNumber,this.onNextCallback,this.onBackCallback){
     pin=getPin();
     phoneNumber=PhoneNumber;
   }
-  Function onTapCallBack;
+  //Callback functions to change auth stage
+  Function() onBackCallback;
+  Function() onNextCallback;
+
   String phoneNumber="";
-  bool enabled=false;
+  bool nextAllowed=false;
   String pin="";
   String getPin(){
     //TODO: Implement getPin() method, which will ask server to generate new pin and send it to user
@@ -24,54 +30,99 @@ class PinInputWidget extends StatefulWidget{
 class PinInputWidgetState extends State<PinInputWidget>{
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width-50,
-        height: 250,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color:Colors.white70,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text("Ми надіслали пін-код на ваш номер телефону. Щоб підтвердити його. Будь-ласка, введіть його",style: TextStyle(fontSize: 18),),
-              ),
-              PinCodeTextField(
-                appContext: context,
-                length: 4,
-                keyboardType: TextInputType.number,
-                onChanged: (value){setState(() {
-                  widget.enabled=value==widget.pin;
-                });
-                },
-              ),
-              Spacer(),
-              InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: RichText(
-                    text:TextSpan(children:[
-                      TextSpan(text: "Не отримали код? ",style: TextStyle(color:Colors.black)),
-                      TextSpan(text:"Відправити повторно",
-                          style: TextStyle(color:Colors.blue),
-                          recognizer: TapGestureRecognizer()..onTap=(){resendPin();}
-                      )
-                    ]),
-                  )
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: AuthTopContainer(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text("Код авторизацiї відправлено на Ваш телефон",style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "Viaoda Libre",
+                  ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              BottomAppBarButton("Далі",buttonEnabled: widget.enabled,onTapHandler: (){widget.onTapCallBack();},),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border(top: BorderSide(width: 1,color: Color(0xffEBEBEB)))
+                    ),
+                    child: InkWell(
+                      child: Text("Запросити код повторно",textAlign: TextAlign.center, style:TextStyle(fontSize: 24,fontFamily: "SEOULHANGANG CBL",color:Colors.blue)
+                      ),
+                      onTap:(){
+                        //TODO: resend PIN;
+                      },
+                    ),
+                  ),
+                )
+              ],),
+            ),
+            maxHeight: MediaQuery.of(context).size.height/6,
           ),
         ),
-      );
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: AuthBottomContainer(
+            Padding(
+              padding: const EdgeInsets.only(top:30,left: 25,right: 25),
+              child: Column(children: [
+                PinCodeTextField(
+                  appContext: context,
+                  length: 4,
+                  keyboardType: TextInputType.number,
+                  onChanged: (value){setState(() {
+                    widget.nextAllowed=value==widget.pin;
+                  });
+                  },
+                  pinTheme: PinTheme(
+                    activeColor: Colors.black,
+                    selectedColor: Colors.black,
+                    inactiveColor: Colors.black,
+                  ),
+                  textStyle: TextStyle(
+                    fontFamily: "SEOULHANGANG CBL"
+                        ""
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: AuthButton("Назад",
+                        fontSize: 24,
+                        onTap: widget.onBackCallback,),
+                        alignment: Alignment.centerLeft,
+                      ),
+                      Container(child: AuthButton("Далi",
+                          fontSize: 24,
+                          onTap: widget.onNextCallback ,
+                          enabled: widget.nextAllowed,
+                      ),
+                        alignment: Alignment.centerRight,
+
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+              ),
+            )
+            ),
+        ),
+      ],
+    );
   }
-
-  void resendPin() {
-
-  }
-
 }
