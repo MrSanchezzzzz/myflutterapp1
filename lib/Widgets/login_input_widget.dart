@@ -2,22 +2,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutterapp1/Widgets/auth_containers.dart';
-import 'package:myflutterapp1/Widgets/bottom_app_bar_button.dart';
 
 import 'auth_button.dart';
 
 class LoginInputWidget extends StatefulWidget{
-  LoginInputWidget(this.loginCallback,this.backCallback,{Key? key}) : super(key: key);
+  LoginInputWidget(this.nextCallback,this.backCallback,{String login=""}){
+    _login=login;
+  }
 
   @override
   LoginInputWidgetState createState()=>LoginInputWidgetState();
-  Function() backCallback;
-  Function(String) loginCallback;
+  Function(String) backCallback;
+  Function(String) nextCallback;
   bool nextAllowed=false;
-  String login="";
+  late String _login;
 
 }
 class LoginInputWidgetState extends State<LoginInputWidget>{
+  late TextEditingController _controller;
+
+  @override
+  void initState(){
+    super.initState();
+    _controller=TextEditingController();
+    _controller.text=widget._login;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,7 +44,8 @@ class LoginInputWidgetState extends State<LoginInputWidget>{
             ),
               textAlign: TextAlign.center,
             ),
-          ),),
+          ),
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -56,6 +67,7 @@ class LoginInputWidgetState extends State<LoginInputWidget>{
                         hintText: "Введіть ваш логін",
                       ),
                       onChanged: onTextChanged,
+                      controller: _controller,
                     )
                 ),
                 Padding(
@@ -66,14 +78,14 @@ class LoginInputWidgetState extends State<LoginInputWidget>{
                     Align(
                       alignment: Alignment.centerLeft,
 
-                      child: AuthButton("Назад",fontSize: 24,onTap: widget.backCallback,),
+                      child: AuthButton("Назад",fontSize: 24,onTap:(){ widget.backCallback(widget._login);},),
                     ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: AuthButton("Далi",
                           fontSize: 24,
                           enabled: widget.nextAllowed,
-                          onTap: (){widget.loginCallback(widget.login);},
+                          onTap: (){widget.nextCallback(widget._login);},
                         ),
                       ),
                       ]
@@ -87,7 +99,7 @@ class LoginInputWidgetState extends State<LoginInputWidget>{
     );
   }
   onTextChanged(String value){
-    widget.login=value;
+    widget._login=value;
     setState((){widget.nextAllowed=ValidateInput(value);});
   }
   bool ValidateInput(value){

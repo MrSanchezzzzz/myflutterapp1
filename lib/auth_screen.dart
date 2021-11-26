@@ -44,7 +44,7 @@ class AuthScreenState extends State<AuthScreen>{
           return PinInputWidget(widget.userPhoneNumber,PinCallback,previuos,Pin: widget.userPin,);
         break;
       case 2:
-        return LoginInputWidget(LoginCallback,previuos);
+        return LoginInputWidget(LoginCallback,SaveLogin,login: widget.userLogin,);
         break;
       case 3:
         CreateUser(widget.userLogin,widget.userPhoneNumber);
@@ -68,6 +68,10 @@ class AuthScreenState extends State<AuthScreen>{
   void LoginCallback(String login){
     widget.userLogin=login;
     next();
+  }
+  void SaveLogin(String login){
+    widget.userLogin=login;
+    previuos();
   }
   void PinCallback(String pin){
     widget.userPin=pin;
