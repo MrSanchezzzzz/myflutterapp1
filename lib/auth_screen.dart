@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:myflutterapp1/Widgets/login_input_widget.dart';
 import 'package:myflutterapp1/Widgets/phone_input_widget.dart';
 import 'package:myflutterapp1/Widgets/pin_input_widget.dart';
+import 'package:myflutterapp1/alert_dialog.dart';
 import 'package:myflutterapp1/main_screen.dart';
 
 class AuthScreen extends StatefulWidget{
@@ -13,6 +14,7 @@ class AuthScreen extends StatefulWidget{
   AuthScreenState createState() => AuthScreenState();
 
   String userPhoneNumber="";
+  String userPin="";
   String userLogin="";
 
   //TODO: return to zero
@@ -36,16 +38,18 @@ class AuthScreenState extends State<AuthScreen>{
   Widget selectAuthWidget(int stage){
     switch (stage){
       case 0:
-        return PhoneInputWidget(PhoneNumberCallback);
+        return PhoneInputWidget(PhoneNumberCallback,Phone: widget.userPhoneNumber);
         break;
       case 1:
-          return PinInputWidget(widget.userPhoneNumber,next,previuos);
+          return PinInputWidget(widget.userPhoneNumber,PinCallback,previuos,Pin: widget.userPin,);
         break;
       case 2:
         return LoginInputWidget(LoginCallback,previuos);
         break;
       case 3:
         CreateUser(widget.userLogin,widget.userPhoneNumber);
+
+
 
         Timer(
             const Duration(seconds: 1),
@@ -63,6 +67,10 @@ class AuthScreenState extends State<AuthScreen>{
   }
   void LoginCallback(String login){
     widget.userLogin=login;
+    next();
+  }
+  void PinCallback(String pin){
+    widget.userPin=pin;
     next();
   }
   void next(){

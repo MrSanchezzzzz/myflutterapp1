@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myflutterapp1/item_create_screen.dart';
 import 'Widgets/item_list_widget.dart';
 import '../item_create_screen.dart';
+import 'alert_dialog.dart';
 class MainScreen extends StatefulWidget{
   const MainScreen({Key? key}) : super(key: key);
 
@@ -13,6 +14,13 @@ class MainScreen extends StatefulWidget{
 
 class MainScreenState extends State<MainScreen> {
   String _searchString="";
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => MyAlertDialog.showAlertDialog(context, "Вiтаю, %username%, ви успiшно доданi в систему"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

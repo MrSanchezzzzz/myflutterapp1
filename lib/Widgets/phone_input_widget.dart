@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myflutterapp1/Widgets/alert_dialog.dart';
+import 'package:myflutterapp1/alert_dialog.dart';
 import 'package:myflutterapp1/Widgets/auth_button.dart';
 import 'package:myflutterapp1/Widgets/auth_containers.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -12,8 +12,10 @@ class PhoneInputWidget extends StatefulWidget{
   @override
   PhoneInputWidgetState createState()=>PhoneInputWidgetState();
   bool buttonEnabled=false;
-  String phoneNumber="";
-  PhoneInputWidget(this.callback);
+  late String phoneNumber;
+  PhoneInputWidget(this.callback,{String Phone="+38"}){
+    phoneNumber=Phone;
+  }
 
   //This callback is used to return phone number to parent widget
   Function(String) callback;
@@ -23,7 +25,10 @@ class PhoneInputWidgetState extends State<PhoneInputWidget> {
  late TextEditingController _controller;
 
   @override
-  void initState()=> _controller=TextEditingController();
+  void initState(){
+    _controller=TextEditingController();
+    _controller.text=widget.phoneNumber;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +51,12 @@ class PhoneInputWidgetState extends State<PhoneInputWidget> {
                       prefixIcon: Padding(
                           padding: EdgeInsets.only(top: 15),
                           child: Icon(Icons.language, color: Colors.black,)
-                      )
+                      ),
+                      hintText:"+380 97 661 82 83"
                   ),
                   controller: _controller,
                   inputFormatters: [
-                    MaskTextInputFormatter(mask: '+38 ### ### ## ##', filter: { "#": RegExp(r'[0-9]') })
+                    MaskTextInputFormatter(mask: '+38# ## ### ## ##', filter: { "#": RegExp(r'[0-9]') })
                   ],
                   onChanged: (value){
                     widget.phoneNumber=value;
@@ -64,7 +70,7 @@ class PhoneInputWidgetState extends State<PhoneInputWidget> {
                   widget.callback(widget.phoneNumber);
                 }
                 else{
-                  MyAlertDialog.showAlertDialog(context);
+                  MyAlertDialog.showAlertDialog(context,"Будь-ласка, введiть коректний номер, щоб продовжити");
                 }
               },
               ),

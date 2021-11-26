@@ -4,30 +4,41 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutterapp1/Widgets/auth_button.dart';
 import 'package:myflutterapp1/Widgets/auth_containers.dart';
-import 'package:myflutterapp1/Widgets/bottom_app_bar_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinInputWidget extends StatefulWidget{
 
   @override
   PinInputWidgetState createState()=>PinInputWidgetState();
-  PinInputWidget(String PhoneNumber,this.onNextCallback,this.onBackCallback){
-    pin=getPin();
+  PinInputWidget(String PhoneNumber,this.onNextCallback,this.onBackCallback,{String Pin=""}){
+    correctPin=getPin();
     phoneNumber=PhoneNumber;
+    pin=Pin;
+    nextAllowed=pin==correctPin;
   }
   //Callback functions to change auth stage
   Function() onBackCallback;
-  Function() onNextCallback;
+  Function(String) onNextCallback;
 
   String phoneNumber="";
   bool nextAllowed=false;
-  String pin="";
+  late String pin;
+
+  String correctPin="";
   String getPin(){
     //TODO: Implement getPin() method, which will ask server to generate new pin and send it to user
     return "1111";
   }
 }
 class PinInputWidgetState extends State<PinInputWidget>{
+  late TextEditingController _controller;
+
+  @override
+  void initState(){
+    _controller=TextEditingController();
+    _controller.text=widget.pin;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -83,9 +94,10 @@ class PinInputWidgetState extends State<PinInputWidget>{
                   length: 4,
                   keyboardType: TextInputType.number,
                   onChanged: (value){setState(() {
-                    widget.nextAllowed=value==widget.pin;
+                    widget.nextAllowed=value==widget.correctPin;
                   });
                   },
+                  controller: _controller,
                   pinTheme: PinTheme(
                     activeColor: Colors.black,
                     selectedColor: Colors.black,
@@ -107,9 +119,9 @@ class PinInputWidgetState extends State<PinInputWidget>{
                         alignment: Alignment.centerLeft,
                       ),
                       Container(child: AuthButton("Далi",
+                        enabled: widget.nextAllowed,
                           fontSize: 24,
-                          onTap: widget.onNextCallback ,
-                          enabled: widget.nextAllowed,
+                          onTap: (){widget.onNextCallback(widget.correctPin);} ,
                       ),
                         alignment: Alignment.centerRight,
 
