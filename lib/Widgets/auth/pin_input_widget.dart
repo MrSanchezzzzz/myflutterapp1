@@ -2,8 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:myflutterapp1/Widgets/auth_button.dart';
-import 'package:myflutterapp1/Widgets/auth_containers.dart';
+import 'package:myflutterapp1/Widgets/auth/auth_button.dart';
+import 'package:myflutterapp1/Widgets/auth/auth_containers.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinInputWidget extends StatefulWidget{

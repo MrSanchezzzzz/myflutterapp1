@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:myflutterapp1/Widgets/main_top_container.dart';
 import 'package:myflutterapp1/item_create_screen.dart';
 import 'Widgets/item_list_widget.dart';
 import '../item_create_screen.dart';
@@ -13,57 +14,54 @@ class MainScreen extends StatefulWidget{
 }
 
 class MainScreenState extends State<MainScreen> {
-  String _searchString="";
-
   void initState() {
     super.initState();
-    WidgetsBinding.instance!
-        .addPostFrameCallback((_) => MyAlertDialog.showAlertDialog(context, "Вiтаю, %username%, ви успiшно доданi в систему"));
+    //WidgetsBinding.instance!.addPostFrameCallback((_) => MyAlertDialog.showAlertDialog(context, "Вiтаю, %username%, ви успiшно доданi в систему"));
   }
+  String _searchString="";
+
+  int _selectedIndex=0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Eucalypt"),
-          actions: [
-            Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: GestureDetector(
-                  onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                      ItemCreateScreen()));
-                  },
-                  child: const Icon(Icons.add),
-                ),
-            ),
-          ],
-        ),
         body:
-            Column(children: [
-              Container(
-                color:Colors.green,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter text to search',
-                        labelText: 'Search',
-                        prefixIcon: Icon(Icons.search),
-                        fillColor: Colors.white,
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                          _searchString=value;
-                      });
-                    },
+            Container(
+              decoration: BoxDecoration(color:Color(0xffD1ECF8)),
+              child: Column(children: [
+                MainTopContainerWidget(),
+                Expanded(child: selectScreen(_selectedIndex)),
+                BottomNavigationBar(items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: "Головна"
                   ),
-                ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.shopping_basket),
+                      label: "Кошик"
+                  ),
+
+                ],
+                currentIndex: _selectedIndex,
+                selectedItemColor: Color(0xffa14e00),
+                onTap: (index){setState(() {
+                  _selectedIndex=index;
+                });},
+                )
+              ],
               ),
-              Expanded(child: ItemsListWidget(searchPattern: _searchString)),
-            ],
             ),
         );
+  }
+  Widget selectScreen(int index){
+    List<Widget> screens=[
+      ItemsListWidget(searchPattern: _searchString),
+
+    ];
+    if(index<0||index>screens.length-1) {
+      return Container();
+    }
+
+    return screens.elementAt(index);
   }
 }

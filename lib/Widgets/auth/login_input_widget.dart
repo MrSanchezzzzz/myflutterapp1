@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myflutterapp1/Widgets/auth_containers.dart';
+import 'package:myflutterapp1/Widgets/auth/auth_containers.dart';
 
 import 'auth_button.dart';
 

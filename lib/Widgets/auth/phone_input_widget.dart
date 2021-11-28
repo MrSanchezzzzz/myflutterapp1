@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myflutterapp1/alert_dialog.dart';
-import 'package:myflutterapp1/Widgets/auth_button.dart';
-import 'package:myflutterapp1/Widgets/auth_containers.dart';
+import 'package:myflutterapp1/Widgets/auth/auth_button.dart';
+import 'package:myflutterapp1/Widgets/auth/auth_containers.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:myflutterapp1/Widgets/bottom_app_bar_button.dart';
 

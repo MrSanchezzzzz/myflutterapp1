@@ -3,9 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myflutterapp1/Widgets/login_input_widget.dart';
-import 'package:myflutterapp1/Widgets/phone_input_widget.dart';
-import 'package:myflutterapp1/Widgets/pin_input_widget.dart';
+import 'package:myflutterapp1/Widgets/auth/login_input_widget.dart';
+import 'package:myflutterapp1/Widgets/auth/phone_input_widget.dart';
+import 'package:myflutterapp1/Widgets/auth/pin_input_widget.dart';
 import 'package:myflutterapp1/alert_dialog.dart';
 import 'package:myflutterapp1/main_screen.dart';
 
@@ -17,7 +17,6 @@ class AuthScreen extends StatefulWidget{
   String userPin="";
   String userLogin="";
 
-  //TODO: return to zero
   int authStage=0;
 }
 

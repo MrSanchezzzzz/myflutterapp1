@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myflutterapp1/start_screen.dart';
 
 import 'auth_screen.dart';
+import 'main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Splash Screen',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        fontFamily: "SEOULHANGANG CBL",
       ),
       home: const LoadingScreen(),
       debugShowCheckedModeBanner: false,
@@ -38,6 +40,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Timer(
         const Duration(seconds: 1),
         () => Navigator.pushReplacement(
+          //TODO: change to StartScreen();
             context, MaterialPageRoute(builder: (context) => StartScreen())));
   }
 
