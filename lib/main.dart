@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myflutterapp1/start_screen.dart';
 
+import 'profile_screen.dart';
 import 'auth_screen.dart';
 import 'main_screen.dart';
 

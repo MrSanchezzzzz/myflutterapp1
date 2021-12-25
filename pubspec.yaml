@@ -106,3 +106,6 @@ flutter:
     - family: Viaoda Libre
       fonts:
         - asset: assets/fonts/ViaodaLibre-Regular.ttf
+    - family: SF Pro Display
+      fonts:
+        - asset: assets/fonts/SFPRODISPLAYREGULAR.OTF

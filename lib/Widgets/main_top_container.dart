@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainTopContainerWidget extends StatelessWidget{
+  Function(String) onInputCallback;
+  MainTopContainerWidget({ required this.onInputCallback});
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height/5,maxWidth: MediaQuery.of(context).size.width),
+      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height/4.5,maxWidth: MediaQuery.of(context).size.width),
       decoration: BoxDecoration(color:Color(0xff4D662D)),
       child: Padding(
         padding: const EdgeInsets.only(top: 35,bottom: 4,left: 28,right: 8),
@@ -33,6 +35,7 @@ class MainTopContainerWidget extends StatelessWidget{
                     ),
                     style: TextStyle(fontFamily: "Viaoda Libre"),
                     onChanged: (value) {
+                      onInputCallback(value);
                     },
                   ),
                 ),
