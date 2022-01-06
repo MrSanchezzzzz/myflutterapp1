@@ -48,39 +48,39 @@ class PinInputWidgetState extends State<PinInputWidget>{
           alignment: Alignment.topCenter,
           child: AuthTopContainer(
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text("Код авторизацiї відправлено на Ваш телефон",style: TextStyle(
+                  child: Text("Код авторизацiї відправлено на Ваш телефон",
+                    style: TextStyle(
                     fontSize: 20,
                     fontFamily: "Viaoda Libre",
                   ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                   ),
                 ),
-                Align(
+                Spacer(),
+                Container(
                   alignment: Alignment.bottomCenter,
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border(top: BorderSide(width: 1,color: Color(0xffEBEBEB)))
+                  padding: EdgeInsets.all(8),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(width: 1,color: Color(0xffEBEBEB)))
+                  ),
+                  child: InkWell(
+                    child: Text("Запросити код повторно",textAlign: TextAlign.center, style:TextStyle(fontSize: 24,fontFamily: "SEOULHANGANG CBL",color:Colors.blue)
                     ),
-                    child: InkWell(
-                      child: Text("Запросити код повторно",textAlign: TextAlign.center, style:TextStyle(fontSize: 24,fontFamily: "SEOULHANGANG CBL",color:Colors.blue)
-                      ),
-                      onTap:(){
-                        //TODO: resend PIN;
-                      },
-                    ),
+                    onTap:(){
+                      //TODO: resend PIN;
+                    },
                   ),
                 )
               ],),
             ),
-            maxHeight: MediaQuery.of(context).size.height/6,
+            maxHeight: MediaQuery.of(context).size.height/5.75,
           ),
         ),
         Align(

@@ -12,12 +12,12 @@ class ItemDetailsScreen extends StatelessWidget {
       this._title, this._text, this._image, this._weight, this._price);
   @override
   Widget build(BuildContext context) {
-    double topHeight = MediaQuery.of(context).size.height * 0.55;
-    double bottomHeight = MediaQuery.of(context).size.height * 0.60;
+    double topHeight = MediaQuery.of(context).size.height * 0.50;
+    double bottomHeight = MediaQuery.of(context).size.height * 0.65;
     return Scaffold(
         body: Stack(
-      children: [
-        Align(
+        children: [
+          Align(
           alignment: Alignment.topCenter,
           child: Container(
             child: Image(
@@ -30,9 +30,9 @@ class ItemDetailsScreen extends StatelessWidget {
             height: topHeight,
           ),
         ),
-        Align(
+          Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+            child: Container(
             height: bottomHeight,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -40,41 +40,36 @@ class ItemDetailsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              this._title,
-                              style: TextStyle(
-                                  fontSize: 24, color: Color(0xff5B5B5B)),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              this._text,
-                              style: TextStyle(
-                                  fontSize: 17, color: Color(0xff5B5B5B)),
-                            ),
-                          ),
-                        ]),
-                  ),
-                  height: bottomHeight*0.6,
-                  padding: EdgeInsets.only(top:8,left:8,right: 8),
-                ),
-                Container(
-                  child: Column(
+            child:
+            Padding(
+              padding: const EdgeInsets.only(left: 15,right: 15,top:15,bottom: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //Title and text
+                  Column(
                     children: [
-                      Container(
-                        height: 30,
-                        width: MediaQuery.of(context).size.width,
+                      Padding(
+                        child: Align(
+                          child: Text(this._title,style: TextStyle(fontSize: 24),
+                          ),
+                          alignment: Alignment.topLeft,
+                        ),
+                        padding: EdgeInsets.only(bottom: 9),
+                      ),
+                      SingleChildScrollView(
+                          child: Text(this._text,style: TextStyle(fontSize: 17),)
+                      ),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.start,
+                  ),
+
+                  //Weight,price and buttons
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top:10,bottom: 15),
                         child: Stack(
                           children: [
                             Image(
@@ -83,10 +78,10 @@ class ItemDetailsScreen extends StatelessWidget {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                              const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Вага: " + this._weight.toString() + "г",
@@ -103,109 +98,56 @@ class ItemDetailsScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        margin: EdgeInsets.only(
-                            bottom: 20, top: 0, left: 10, right: 10),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xff4D662D),
-                            borderRadius: BorderRadius.circular(10)),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        width: double.infinity,
-                        height: 60,
-                        child: TextButton(
-                          onPressed: () {
-                            MyAlertDialog.showAlertDialog(
-                                context, "Успiшно додано в кошик");
-                          },
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Додати в кошик",
-                                style: TextStyle(
-                                    color: Color(0xffD1D5DB), fontSize: 17),
-                              )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              onPressed: (){},
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Color(0xff4D662D)),
+                                foregroundColor:MaterialStateProperty.all<Color>(Color(0xffD1D5DB)),
+                                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.symmetric(vertical: 18)),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+                                )
+                              ),
+                              child: Text("Додати в кошик",style: TextStyle(fontSize: 17),),
+                          ),
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xff4D662D),
-                            borderRadius: BorderRadius.circular(10)),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        width: double.infinity,
-                        height: 60,
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Порiвняти",
-                                style: TextStyle(
-                                    color: Color(0xffD1D5DB), fontSize: 17),
-                              )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              onPressed: (){},
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Color(0xff4D662D)),
+                                foregroundColor:MaterialStateProperty.all<Color>(Color(0xffD1D5DB)),
+                                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.symmetric(vertical: 18)),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+                                ),
+                          ),
+                                child: Text("Порiвняти",style: TextStyle(fontSize: 17),),
+                        )
                         ),
-                      )
+                      ),
                     ],
-                  ),
-                ),
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         )
       ],
-    ));
+    )
+    );
   }
 }
 /*
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height*0.6,maxHeight: MediaQuery.of(context).size.height*0.6),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color:Colors.white,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(this._title,style: TextStyle(
-                                  fontSize: 24,
-                                  color: Color(0xff5B5B5B)),),
-                            ),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(this._text,style: TextStyle(fontSize: 17,color:Color(0xff5B5B5B)),),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
 
-                    ),
-                  ],
-                ),
-              ),
-            ),
+ */
 
-
-
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 35),
-
-                child: CloseButton(
-                  onPressed: (){Navigator.pop(context);},
-                ),
-              ),
-            ),
-* */

@@ -21,7 +21,7 @@ class AuthBottomContainer extends StatelessWidget{
         ),
         child:Column(children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(top: 10,bottom: 10),
               child: Container(
                 height: 2,
                 width: MediaQuery.of(context).size.width/8,

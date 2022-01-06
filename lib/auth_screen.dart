@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:myflutterapp1/Widgets/auth/phone_input_widget.dart';
 import 'package:myflutterapp1/Widgets/auth/pin_input_widget.dart';
 import 'package:myflutterapp1/alert_dialog.dart';
 import 'package:myflutterapp1/main_screen.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AuthScreen extends StatefulWidget{
   @override
@@ -40,7 +42,7 @@ class AuthScreenState extends State<AuthScreen>{
         return PhoneInputWidget(PhoneNumberCallback,Phone: widget.userPhoneNumber);
         break;
       case 1:
-          return PinInputWidget(widget.userPhoneNumber,PinCallback,previuos,Pin: widget.userPin,);
+          return PinInputWidget(widget.userPhoneNumber,PinCallback,previuosStep,Pin: widget.userPin,);
         break;
       case 2:
         return LoginInputWidget(LoginCallback,SaveLogin,login: widget.userLogin,);
@@ -62,32 +64,35 @@ class AuthScreenState extends State<AuthScreen>{
 
   void PhoneNumberCallback(String phoneNumber){
    widget.userPhoneNumber=phoneNumber;
-   next();
+   nextStep();
   }
   void LoginCallback(String login){
     widget.userLogin=login;
-    next();
+    nextStep();
   }
   void SaveLogin(String login){
     widget.userLogin=login;
-    previuos();
+    previuosStep();
   }
   void PinCallback(String pin){
     widget.userPin=pin;
-    next();
+    nextStep();
   }
-  void next(){
+  void nextStep(){
     setState(() {
       widget.authStage++;
     });
   }
-  void previuos(){
+  void previuosStep(){
     setState(() {
       widget.authStage--;
     });
   }
 
-  void CreateUser(String login, String phoneNumber) {
+  Future<void> CreateUser(String login, String phoneNumber) async {
     //TODO: implement method CreateUser. It will ask server to add user to db
+    final String dir= (await getTemporaryDirectory()).path;
+    File f=File('$dir/eucalyptTemp.txt');
+    f.writeAsString(login+"\n"+phoneNumber);
   }
 }

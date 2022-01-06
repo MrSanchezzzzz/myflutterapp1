@@ -11,8 +11,9 @@ class MyAlertDialog{
         contentPadding: EdgeInsets.zero,
         content: Container(
           width: MediaQuery.of(context).size.width/4,
-          height: MediaQuery.of(context).size.height/6,
+          height: MediaQuery.of(context).size.height/5.75,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -22,7 +23,6 @@ class MyAlertDialog{
                   textAlign: TextAlign.center,
                 ),
               ),
-              Spacer(),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: BottomAppBarButton("ОК",onTapHandler: (){Navigator.of(context).pop();},),

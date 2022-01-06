@@ -1,22 +1,26 @@
 
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:myflutterapp1/Widgets/main_top_container.dart';
 import 'package:myflutterapp1/profile_screen.dart';
+import 'package:path_provider/path_provider.dart';
 import 'Widgets/item_list_widget.dart';
 import 'alert_dialog.dart';
 
 class MainScreen extends StatefulWidget{
-  const MainScreen({Key? key}) : super(key: key);
-
+  MainScreen({Key? key}) : super(key: key);
+  bool firstLaunch=true;
   @override
   MainScreenState createState() => MainScreenState();
 
 }
 
 class MainScreenState extends State<MainScreen> {
+
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => MyAlertDialog.showAlertDialog(context, "Вiтаю, %username%, ви успiшно доданi в систему"));
   }
   String _searchString="";
 
@@ -26,8 +30,21 @@ class MainScreenState extends State<MainScreen> {
       _searchString=value;
     });
   }
+  void ShowWelcomeMessage() async{
+    String s=(await getTemporaryDirectory()).path;
+    File f=File('$s/eucalyptTemp.txt');
+    String username=(await f.readAsLines())[0];
+    Timer(
+        const Duration(milliseconds: 500),
+            () => MyAlertDialog.showAlertDialog(context, "Вiтаю, $username, ви успiшно доданi в систему"));
+  }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    if(widget.firstLaunch) {
+      widget.firstLaunch=false;
+      //ShowWelcomeMessage();
+    }
+
     return Scaffold(
         body:
             Container(

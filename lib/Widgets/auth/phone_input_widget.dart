@@ -36,7 +36,7 @@ class PhoneInputWidgetState extends State<PhoneInputWidget> {
         Column(
           children: [
             Padding(
-                padding: EdgeInsets.only(top: 30, left: 15, right: 15),
+                padding: EdgeInsets.only(top:15, left: 15, right: 15),
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   style: TextStyle(
@@ -61,6 +61,13 @@ class PhoneInputWidgetState extends State<PhoneInputWidget> {
                   onChanged: (value){
                     widget.phoneNumber=value;
                     },
+                  onTap: (){
+                    if(_controller.text==""){
+                      _controller.text+="+38";
+                      setState(() {});
+                    }
+                  },
+
                 )
             ),
             Padding(
