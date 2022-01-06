@@ -23,7 +23,9 @@ class _Item {
 class Food{
   final String name;
   String? description;
-  Food({required this.name,this.description});
+  String? weight;
+  String? price;
+  Food({required this.name,this.description,this.weight,this.price});
 }
 class ItemsListWidget extends StatefulWidget {
   ItemsListWidget({Key? key, String searchPattern = ""}) : super(key: key) {
@@ -104,7 +106,10 @@ class ItemListWidgetState extends State<ItemsListWidget> {
              //TODO: Move to item details screen
               Navigator.push(context, MaterialPageRoute(builder: (context)=>ItemDetailsScreen(
                   foodsToDisplay[index].name,
-                  foodsToDisplay[index].description??"", AssetImage("assets/images/coala_item.jpg"), 0, 0
+                  foodsToDisplay[index].description??"", AssetImage("assets/images/coala_item.jpg"),
+                  foodsToDisplay[index].weight??"0",
+                  foodsToDisplay[index].price??"0"
+
               )
               )
               );
@@ -137,7 +142,9 @@ class ItemListWidgetState extends State<ItemsListWidget> {
       for (Map<String, dynamic> food in i.food_options){
         Food f=Food(
             name: food["name"],
-            description: food["description"]
+            description: food["description"],
+          weight:food["weight"].toString(),
+          price: food["price"].toString()
         );
         if(f.name.contains(widget.searchPattern)){
           foods.add(f);
@@ -145,9 +152,7 @@ class ItemListWidgetState extends State<ItemsListWidget> {
       }
     }
     print("Fetched "+foods.length.toString()+" items");
-    setState(() {
-
-    });
+    setState(() {});
   }
   Future<List<_Item>> fetchList() async{
     final responce=await http.get(Uri.parse('http://dev.cherest.com.ua/api/v3/user/restaurant/83/menu'));

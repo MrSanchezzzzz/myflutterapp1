@@ -6,8 +6,8 @@ class ItemDetailsScreen extends StatelessWidget {
   final String _title;
   final String _text;
   final ImageProvider _image;
-  final int _weight;
-  final int _price;
+  final String _weight;
+  final String _price;
   ItemDetailsScreen(
       this._title, this._text, this._image, this._weight, this._price);
   @override
