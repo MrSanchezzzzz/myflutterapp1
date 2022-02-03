@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       alignment: Alignment.centerLeft,
                       child: Container(
                         constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width*0.7,
+                            maxWidth: MediaQuery.of(context).size.width*0.65,
                           maxHeight: double.infinity,
                         ),
                         child: Column(
@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               alignment: Alignment.centerLeft,
                                 child: InkWell(
                                     child: Text("+38 098 456 42 55"),
-                                  onTap: (){ShowCallMenu(context);},
+                                  onTap: (){},
                                 )
                             ),
                           ],
@@ -111,19 +111,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 itemBuilder: (context,index){
                  return Container(
                    child: InkWell(
-                      child: Row(
-                        children: [
-                          Image(
-                              image: AssetImage(menuOptions[index][1]),
-                            width: 20,
-                            height: 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 4),
-                            child: Text(menuOptions[index][0]),
-                          )
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: [
+                            Image(
+                                image: AssetImage(menuOptions[index][1]),
+                              width: 20,
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8,right: 4),
+                              child: Text(menuOptions[index][0]),
+                            )
+                          ],
+                        ),
                       ),
+                     onTap: SelectCallback(index,context),
                     ),
                   );
                 },
@@ -136,10 +140,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-  void ShowCallMenu(BuildContext context){
+  ShowCallMenu(BuildContext context){
     showModalBottomSheet(context: context, builder: (BuildContext context){
       return Container(
-        padding: EdgeInsets.only(top: 24,bottom: 18),
+        padding: EdgeInsets.only(top: 24,bottom: 18,left: 8,right: 8),
         decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))),
         constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height/2.5),
         child: ListView.separated(
@@ -181,7 +185,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ["Технiчна пiдтримка","assets/images/support.png"],
     ["Вийти","assets/images/logout.png"],
   ];
+  Function() SelectCallback(int index,BuildContext context){
+    switch(index){
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        return (){ShowCallMenu(context);};
+        break;
+      case 5:
+        break;
 
+    }
+    return (){};
+  }
   List<DropdownMenuItem<int>> GenerateDropDownMenuItems(){
     List<DropdownMenuItem<int>> widgets=[];
     List<String> images=["assets/images/Apple_Pay_Mark.png","assets/images/mastercard_mark.png"];

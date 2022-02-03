@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:myflutterapp1/Widgets/main_top_container.dart';
+import 'package:myflutterapp1/Widgets/order_screen.dart';
 import 'package:myflutterapp1/profile_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'Widgets/item_list_widget.dart';
@@ -42,6 +43,7 @@ class MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context){
     if(widget.firstLaunch) {
       widget.firstLaunch=false;
+      //TODO: remove comment
       //ShowWelcomeMessage();
     }
 
@@ -51,7 +53,7 @@ class MainScreenState extends State<MainScreen> {
               decoration: BoxDecoration(color:Color(0xffD1ECF8)),
               child: Column(children: [
                 MainTopContainerWidget(onInputCallback: OnInput,),
-                Expanded(child: selectScreen(_selectedIndex)),
+                Expanded(child: ItemsListWidget(searchPattern: _searchString,)),
                 BottomNavigationBar(items: [
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
@@ -70,14 +72,15 @@ class MainScreenState extends State<MainScreen> {
                 currentIndex: _selectedIndex,
                 selectedItemColor: Color(0xffa14e00),
                 onTap: (index) {
-                  if (index == 2) {
+                  if(index==1){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder:(context)=>OrderScreen()));
+                  }
+                  else if (index == 2) {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context) => ProfileScreen()));
                     return;
                   }
-                    setState(() {
-                      _selectedIndex = index;
-                    });
                 },
                 )
               ],
@@ -85,12 +88,5 @@ class MainScreenState extends State<MainScreen> {
             ),
         );
   }
-  Widget selectScreen(int index){
-    switch(index){
-      case 0:
-         return ItemsListWidget(searchPattern: _searchString);
-      default:
-        return Container();
-    }
-  }
+
 }

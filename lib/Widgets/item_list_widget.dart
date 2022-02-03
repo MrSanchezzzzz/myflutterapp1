@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../item_details_screen.dart';
 import 'package:http/http.dart' as http;
+
+import '../main.dart';
 class _Item {
  final int id;
  final List<dynamic> food_options;
@@ -20,13 +22,7 @@ class _Item {
    );
  }
 }
-class Food{
-  final String name;
-  String? description;
-  String? weight;
-  String? price;
-  Food({required this.name,this.description,this.weight,this.price});
-}
+
 class ItemsListWidget extends StatefulWidget {
   ItemsListWidget({Key? key, String searchPattern = ""}) : super(key: key) {
     this.searchPattern = searchPattern;
@@ -39,7 +35,7 @@ class ItemsListWidget extends StatefulWidget {
 
 class ItemListWidgetState extends State<ItemsListWidget> {
   @override void initState(){
-    getItems();
+    getFoods();
     super.initState();
   }
 
@@ -104,13 +100,7 @@ class ItemListWidgetState extends State<ItemsListWidget> {
             ),
             onTap: () {
              //TODO: Move to item details screen
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ItemDetailsScreen(
-                  foodsToDisplay[index].name,
-                  foodsToDisplay[index].description??"", AssetImage("assets/images/coala_item.jpg"),
-                  foodsToDisplay[index].weight??"0",
-                  foodsToDisplay[index].price??"0"
-
-              )
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ItemDetailsScreen(foodsToDisplay[index])
               )
               );
             },
@@ -123,28 +113,19 @@ class ItemListWidgetState extends State<ItemsListWidget> {
   }
 
   var lastLoadedItemIndex = 0;
-  //Todo: implement getItems method
   ///count(int) - how many NEW items should method add to list
-  getItems({int count = 5}) async {
+  getFoods({int count = 5}) async {
     List<_Item> items = [];
     items = await fetchList();
 
     foods.clear();
     for (_Item i in items) {
-      /*
-      if (!i.name
-          .contains(RegExp(widget.searchPattern, caseSensitive: false))) {
-        continue;
-      }
-      itemsToDisplay.add(i);
-    }
-      */
       for (Map<String, dynamic> food in i.food_options){
         Food f=Food(
             name: food["name"],
             description: food["description"],
           weight:food["weight"].toString(),
-          price: food["price"].toString()
+          price: double.parse(food["price"].toString())
         );
         if(f.name.contains(widget.searchPattern)){
           foods.add(f);

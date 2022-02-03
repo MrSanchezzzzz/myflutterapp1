@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:myflutterapp1/alert_dialog.dart';
 import 'Widgets/bottom_app_bar_button.dart';
+import 'main.dart';
 
 class ItemDetailsScreen extends StatelessWidget {
-  final String _title;
-  final String _text;
-  final ImageProvider _image;
-  final String _weight;
-  final String _price;
-  ItemDetailsScreen(
-      this._title, this._text, this._image, this._weight, this._price);
+  
+  ImageProvider? image;
+  late Food f;
+  ItemDetailsScreen(Food food, {this.image}){
+    f=food;
+  }
   @override
   Widget build(BuildContext context) {
     double topHeight = MediaQuery.of(context).size.height * 0.50;
@@ -21,7 +21,7 @@ class ItemDetailsScreen extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Container(
             child: Image(
-              image: this._image,
+              image: this.image??AssetImage("assets/images/coala_item.jpg"),
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.fill,
@@ -51,14 +51,14 @@ class ItemDetailsScreen extends StatelessWidget {
                     children: [
                       Padding(
                         child: Align(
-                          child: Text(this._title,style: TextStyle(fontSize: 24),
+                          child: Text(f.name,style: TextStyle(fontSize: 24),
                           ),
                           alignment: Alignment.topLeft,
                         ),
                         padding: EdgeInsets.only(bottom: 9),
                       ),
                       SingleChildScrollView(
-                          child: Text(this._text,style: TextStyle(fontSize: 17),)
+                          child: Text(f.description??"",style: TextStyle(fontSize: 17),)
                       ),
                     ],
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -84,12 +84,12 @@ class ItemDetailsScreen extends StatelessWidget {
                                 MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Вага: " + this._weight.toString() + "г",
+                                    "Вага: " + f.weight.toString()+ "г",
                                     style: TextStyle(
                                         fontSize: 16, color: Color(0xff5B5B5B)),
                                   ),
                                   Text(
-                                    "Цiна:" + this._price.toString() + "грн",
+                                    "Цiна:" + f.price!.round().toString() + "грн",
                                     style: TextStyle(
                                         fontSize: 16, color: Color(0xff5B5B5B)),
                                   ),
@@ -104,7 +104,10 @@ class ItemDetailsScreen extends StatelessWidget {
                         child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                foodsInCart.add(f);
+                                MyAlertDialog.showAlertDialog(context, "Додано в кошик");
+                              },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all<Color>(Color(0xff4D662D)),
                                 foregroundColor:MaterialStateProperty.all<Color>(Color(0xffD1D5DB)),
