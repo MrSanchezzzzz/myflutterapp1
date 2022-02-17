@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:myflutterapp1/Widgets/auth/login_input_widget.dart';
-import 'package:myflutterapp1/Widgets/auth/phone_input_widget.dart';
 import 'package:myflutterapp1/location_selection_screen.dart';
 import 'dart:math' as math;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -67,6 +65,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: IntrinsicHeight(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           padding: EdgeInsets.only(top: 18, bottom: 6),
@@ -177,10 +176,10 @@ class _OrderScreenState extends State<OrderScreen> {
                             ],
                           ),
                         ),
-                        Spacer(),
+                        //Spacer(),
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 10, right: 10, bottom: 8),
+                              left: 10, right: 10,),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -196,7 +195,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               Label(text: "Ваш коментар",),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 8, bottom: 16),
+                                    top: 2, bottom: 8),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 4),

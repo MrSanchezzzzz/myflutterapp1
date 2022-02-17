@@ -39,7 +39,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
     Polygon p=Polygon(polygonId: PolygonId(""),points: polygon,fillColor: Color(0x594D662D),strokeColor: Color(0xff4D662D));
     polygons.add(p);
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(72, 72)), 'assets/images/marker.png')
+        ImageConfiguration(size: Size(24,24)), 'assets/images/marker.png')
         .then((onValue) {
       markerIcon = onValue;
     });
